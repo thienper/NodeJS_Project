@@ -11,8 +11,4 @@ const Product = mongoose.model('Product', {
     position: Number,
     deleted: Boolean
 }, 'products');
-
-
-// aaaaaa
-
 module.exports = Product;
