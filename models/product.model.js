@@ -12,4 +12,7 @@ const Product = mongoose.model('Product', {
     deleted: Boolean
 }, 'products');
 
+
+// aaaaaa
+
 module.exports = Product;
