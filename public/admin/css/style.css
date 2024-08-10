@@ -1,0 +1,43 @@
+.header {
+    background-color: #050e177f;
+    padding: 10px 0;
+
+}
+
+ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding-top: 10px;
+    padding-left: 0px;
+}
+
+ul li {
+    margin-left: 10px;
+    margin-top: 2px;
+}
+
+ul li a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+}
+
+.footer {
+    width: 100%;
+    background-color: #050e177f;
+    color: aliceblue;
+    font-weight: bold;
+    text-align: center;
+    height: 30px;
+}
+
+.col-3 .inner-logo a {
+    color: #f9f9f9;
+    font-weight: bold;
+}
+
+.body .row .col-3 {
+    background-color: #050e1732;
+    height: 500px;
+}

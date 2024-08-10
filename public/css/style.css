@@ -83,3 +83,8 @@
     font-size: 14px;
     margin-top: 5px;
 }
+
+.col-3 .inner-logo a {
+    color: #f9f9f9;
+    font-weight: bold;
+}

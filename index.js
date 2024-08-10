@@ -4,6 +4,7 @@ const express = require('express');
 
 const routerAdmin = require("./routers/admin/index.router");
 const router = require("./routers/client/index.router");
+const systemConfig = require("./config/system")
 
 require("dotenv").config();
 const database = require("./config/database")
@@ -17,6 +18,9 @@ const port = process.env.PORT;
 app.set('views', './views');
 app.set('view engine', 'pug');
 app.use(express.static('public'))
+
+//App local
+app.locals.prefixAdmin = systemConfig.prefixAdmin
 
 //Router
 routerAdmin(app)
