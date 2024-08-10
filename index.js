@@ -1,6 +1,8 @@
 const path = require('path');
 const pug = require('pug');
 const express = require('express');
+
+const routerAdmin = require("./routers/admin/index.router");
 const router = require("./routers/client/index.router");
 
 require("dotenv").config();
@@ -17,6 +19,7 @@ app.set('view engine', 'pug');
 app.use(express.static('public'))
 
 //Router
+routerAdmin(app)
 router(app)
 
 app.listen(port, () => {
