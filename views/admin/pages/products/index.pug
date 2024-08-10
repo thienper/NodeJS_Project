@@ -1,6 +1,14 @@
 extends ../../layouts/defaut
 block main
-  h1 Trang Danh Sách Sản Phẩm
+  h1 Danh Sách Sản Phẩm
+    .card.mb-3
+      .card-header Bộ lọc và Tìm kiếm
+      .card-body
+        each item in filterStatus
+          button(
+          class=`btn btn-sm ml-1 btn-outline-success ${item.class}`,
+          button-status=item.status
+          ) #{item.name}
 
     table.table.table-hover.table-sm
       thead
