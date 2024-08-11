@@ -41,7 +41,7 @@ ul li a {
 
 .body .row .col-3 {
     background-color: #050e1732;
-    height: auto;
+    min-height: 500px;
 }
 
 th,
