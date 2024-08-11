@@ -63,3 +63,8 @@ td {
     display: flex;
     flex-wrap: nowrap
 }
+
+.page-change {
+    display: flex;
+    justify-content: center;
+}
