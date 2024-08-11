@@ -53,3 +53,13 @@ td {
 .card-header {
     font-size: 25px;
 }
+
+.split-page>li {
+    font-size: 15px;
+    width: auto;
+}
+
+.split-page {
+    display: flex;
+    flex-wrap: nowrap
+}
