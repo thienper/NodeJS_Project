@@ -50,6 +50,10 @@ td {
 }
 
 /* Tìm Kiếm */
+#form-search {
+    display: flex !important;
+}
+
 .card-header {
     font-size: 25px;
 }
