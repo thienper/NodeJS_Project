@@ -9,6 +9,7 @@ const Product = mongoose.model('Product', {
     thumbnail: String,
     status: String,
     position: Number,
-    deleted: Boolean
+    deleted: Boolean,
+    deletedAt: Date
 }, 'products');
 module.exports = Product;
