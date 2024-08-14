@@ -93,8 +93,6 @@ if (formChangeMulti) {
             const isConfirm = confirm("bạn có muốn xóa không?")
             if (!isConfirm) {
                 return;
-            } else {
-
             }
         }
 
@@ -104,11 +102,21 @@ if (formChangeMulti) {
             //console.log(inputIds)
             inputsChecked.forEach(input => {
                 const id = input.value;
-                ids.push(id)
+                if (typeChange == "change-position") {
+                    const position = input
+                        .closest("tr")
+                        .querySelector("input[name='position']")
+                        .value;
+
+                    console.log(`${id}-${position}`)
+                    ids.push(`${id}-${position}`)
+                } else {
+                    ids.push(id)
+                }
             });
+
             console.log(ids.join(", "))
             inputIds.value = ids.join(", ")
-
             formChangeMulti.submit();
         } else {
             alert("Vui lòng chọn ít nhất 1 sản phẩm")

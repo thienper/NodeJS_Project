@@ -32,7 +32,10 @@ module.exports.index = async (req, res) => {
 
     )
 
-    const products = await Product.find(find).limit(objectPagination.limitItem).skip(objectPagination.skip)
+    const products = await Product.find(find)
+        .sort({ position: "asc" }) //desc : giảm dần,asc : tăng dần
+        .limit(objectPagination.limitItem)
+        .skip(objectPagination.skip)
     //console.log(products)
     res.render("admin/pages/products/index.pug", {
         pageTitle: "Trang Danh Sách Sản Phẩm",
@@ -56,7 +59,7 @@ module.exports.changeStatus = async (req, res) => {
 module.exports.changeMulti = async (req, res) => {
 
     const type = req.body.type
-    const ids = req.body.ids.split(", ")
+    const ids = req.body.ids.split(", ");
     switch (type) {
         case "inactive":
             await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" })
@@ -66,6 +69,17 @@ module.exports.changeMulti = async (req, res) => {
             break;
         case "delete-all":
             await Product.updateMany({ _id: ids }, { deleted: true, deletedAt: new Date() })
+            break;
+        case "change-position":
+            for (const item of ids) {
+                let [id, position] = item.split("-")
+                position = parseInt(position)
+                // console.log(id)
+                // console.log(position)
+                await Product.updateOne({ _id: id }, { position: position });
+            }
+            break;
+        default:
             break;
     }
     res.redirect("back")
