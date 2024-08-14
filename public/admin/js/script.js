@@ -86,7 +86,18 @@ if (formChangeMulti) {
         const inputsChecked = checkboxMullti.querySelectorAll(
             "input[name='id']:checked"
         )
-        console.log(inputsChecked)
+        //console.log(inputsChecked)
+
+        const typeChange = e.target.elements.type.value
+        if (typeChange == "delete-all") {
+            const isConfirm = confirm("bạn có muốn xóa không?")
+            if (!isConfirm) {
+                return;
+            } else {
+
+            }
+        }
+
         if (inputsChecked.length > 0) {
             let ids = [];
             const inputIds = formChangeMulti.querySelector("input[name='ids']")
