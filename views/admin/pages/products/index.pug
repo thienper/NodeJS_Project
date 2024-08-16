@@ -18,7 +18,15 @@ block main
           .col-6
             +search(keyword)
       .card-body
-          +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+        .row 
+          .col-8 
+            +form-change-multi(`${prefixAdmin}/products/change-multi?_method=PATCH`)
+          .col-4
+            a(
+              href=`${prefixAdmin}/products/create`
+              class="btn btn-outline-success add-item"
+              ) + Thêm Mới
+          
     table( 
       class="table table-hover table-sm"
       checkbox-multi
@@ -77,13 +85,39 @@ block main
                   class="badge badge-danger"
                   ) Dừng hoạt động
             td
-              button(class="btn btn-warning btn-sm") Sửa
+              button(
+                class="btn btn-warning btn-sm"
+                data-toggle="modal" 
+                data-target="#myModal"
+                ) Sửa
               button(
                 class="btn btn-danger btn-sm ml-1"
                 button-delete
                 data-id=item.id
                 ) Xóa
   +pagination(pagination)
+  a(
+    href=`${prefixAdmin}/products/trash`
+    class="btn-trash"
+    ) 
+    <svg class="icon-trash" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" style="fill: rgba(0, 0, 0, 1);transform: ;msFilter:;">
+          <path d="M5 20a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8h2V6h-4V4a2 2 0 0 0-2-2H9a2 2 0 0 0-2 2v2H3v2h2zM9 4h6v2H9zM8 8h9v12H7V8z"></path>
+          <path d="M9 10h2v8H9zm4 0h2v8h-2z"></path>
+    </svg>Thùng rác
+
+  #myModal.modal
+      .modal-dialog
+        .modal-content
+          // Modal Header
+          .modal-header
+            h4.modal-title Modal Heading
+            button.close(type='button', data-dismiss='modal') &times;
+          // Modal body
+          .modal-body
+            | Modal body..
+          // Modal footer
+          .modal-footer
+            button.btn.btn-danger(type='button', data-dismiss='modal') Close
 
   form(
     action=""
@@ -97,4 +131,5 @@ block main
     id ="form-delete-item"
     data-path= `${prefixAdmin}/products/delete`
   )
+
   script(src="/admin/js/product.js")

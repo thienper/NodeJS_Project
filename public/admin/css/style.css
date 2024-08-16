@@ -73,6 +73,26 @@ td {
     justify-content: center;
 }
 
+.trash-icon {
+    margin-top: 13px;
+}
+
+.btn-trash {
+    text-align: center;
+    height: 40px;
+    width: 150px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 5px;
+    border: 2px solid black;
+    text-decoration: none;
+    display: block;
+}
+
+.btn-trash:hover {
+    text-decoration: none;
+}
+
 /* Start Show Alert */
 [show-alert] {
     position: fixed;
@@ -112,3 +132,7 @@ td {
 }
 
 /* End Show Alert */
+/* Add Item */
+.add-item {
+    margin-bottom: 18px;
+}

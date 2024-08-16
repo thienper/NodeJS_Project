@@ -108,7 +108,7 @@ if (formChangeMulti) {
                         .querySelector("input[name='position']")
                         .value;
 
-                    console.log(`${id}-${position}`)
+                    //console.log(`${id}-${position}`)
                     ids.push(`${id}-${position}`)
                 } else {
                     ids.push(id)

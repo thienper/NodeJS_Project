@@ -2,6 +2,8 @@ const Product = require("../../models/product.model")
 const filterStatusHelper = require("../../helpers/filterStatus.js")
 const searchHelper = require("../../helpers/search.js")
 const paginationHelper = require("../../helpers/pagination.js")
+const pagination = require("../../helpers/pagination.js")
+const systemConfig = require("../../config/system.js")
 
 // [GET] /admin/products
 module.exports.index = async (req, res) => {
@@ -33,7 +35,7 @@ module.exports.index = async (req, res) => {
     )
 
     const products = await Product.find(find)
-        .sort({ position: "asc" }) //desc : giảm dần,asc : tăng dần
+        .sort({ position: "desc" }) //desc : giảm dần,asc : tăng dần
         .limit(objectPagination.limitItem)
         .skip(objectPagination.skip)
     //console.log(products)
@@ -98,4 +100,64 @@ module.exports.deleteItem = async (req, res) => {
     await Product.updateOne({ _id: id }, { deleted: "true", deletedAt: new Date() })
     req.flash('info', `Xóa thành công 1 sản phẩm`);
     res.redirect("back")
+}
+// [GET] /admin/products/trash
+module.exports.trash = async (req, res) => {
+    let find = {
+        deleted: true
+    }
+    const countProduct = await Product.countDocuments(find);
+    let objectPagination = paginationHelper(
+        {
+            limitItem: 4,
+            currentPage: 1
+        },
+        req.query,
+        countProduct
+
+    )
+    const trashProduct = await Product.find({ deleted: true })
+    console.log(trashProduct)
+    res.render("admin/pages/trash/index.pug", {
+        pageTitle: "Trang thùng rác",
+        products: trashProduct,
+        pagination: objectPagination
+    });
+}
+// [DELETE] /admin/products/trash/delete/:id
+module.exports.deleteItemForever = async (req, res) => {
+    const id = req.params.id;
+    console.log(id)
+    await Product.deleteOne({ _id: id })
+    req.flash('info', `Xóa thành công 1 sản phẩm`);
+    res.redirect("back")
+}
+// [GET] /admin/products/trash/return/:id
+module.exports.returnItem = async (req, res) => {
+    const id = req.params.id;
+    await Product.updateOne({ _id: id }, { deleted: false })
+    req.flash('info', `Chuyển sản phẩm thành công`);
+    res.redirect("back")
+}
+// [GET] /admin/products/create
+module.exports.create = async (req, res) => {
+    res.render("admin/pages/products/create", {
+        pageTitle: "Thêm mới sản phẩm"
+    });
+}
+// [POST] /admin/products/create
+module.exports.createPost = async (req, res) => {
+    req.body.price = parseInt(req.body.price);
+    req.body.discountPercentage = parseInt(req.body.discountPercentage);
+    req.body.stock = parseInt(req.body.stock);
+    if (req.body.position == "") {
+        const countProduct = await Product.countDocuments();
+        req.body.position = countProduct + 1;
+    } else {
+        req.body.position = parseInt(req.body.position);
+    }
+    console.log(req.body)
+    const product = new Product(req.body);
+    await product.save()
+    res.redirect(`${systemConfig.prefixAdmin}/products`);
 }
