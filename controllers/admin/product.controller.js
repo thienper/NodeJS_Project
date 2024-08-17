@@ -54,7 +54,7 @@ module.exports.changeStatus = async (req, res) => {
 
     await Product.updateOne({ _id: id }, { status: status });
 
-    req.flash('info', 'Cập nhật trạng thái thành công');
+    req.flash('success', 'Cập nhật trạng thái thành công');
     //res.redirect : Chuyển hướng trang, thuộc tính back: chuyển hướng lại trang trước đó
     res.redirect("back")
 }
@@ -66,15 +66,15 @@ module.exports.changeMulti = async (req, res) => {
     switch (type) {
         case "inactive":
             await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" })
-            req.flash('info', `Cập nhật thành công của ${ids.length} sản phẩm`);
+            req.flash('success', `Cập nhật thành công của ${ids.length} sản phẩm`);
             break;
         case "active":
             await Product.updateMany({ _id: { $in: ids } }, { status: "active" })
-            req.flash('info', `Cập nhật thành công của ${ids.length} sản phẩm`);
+            req.flash('success', `Cập nhật thành công của ${ids.length} sản phẩm`);
             break;
         case "delete-all":
             await Product.updateMany({ _id: ids }, { deleted: true, deletedAt: new Date() })
-            req.flash('info', `Xóa thành công ${ids.length} sản phẩm`);
+            req.flash('success', `Xóa thành công ${ids.length} sản phẩm`);
             break;
         case "change-position":
             for (const item of ids) {
@@ -84,7 +84,7 @@ module.exports.changeMulti = async (req, res) => {
                 // console.log(position)
                 await Product.updateOne({ _id: id }, { position: position });
             }
-            req.flash('info', `Đẫ đổi vị trí thành công ${ids.length} sản phẩm`);
+            req.flash('success', `Đẫ đổi vị trí thành công ${ids.length} sản phẩm`);
             break;
         default:
             break;
@@ -98,7 +98,7 @@ module.exports.deleteItem = async (req, res) => {
 
     //await Product.deleteOne({ _id: id })
     await Product.updateOne({ _id: id }, { deleted: "true", deletedAt: new Date() })
-    req.flash('info', `Xóa thành công 1 sản phẩm`);
+    req.flash('success', `Xóa thành công 1 sản phẩm`);
     res.redirect("back")
 }
 // [GET] /admin/products/trash
@@ -129,14 +129,14 @@ module.exports.deleteItemForever = async (req, res) => {
     const id = req.params.id;
     console.log(id)
     await Product.deleteOne({ _id: id })
-    req.flash('info', `Xóa thành công 1 sản phẩm`);
+    req.flash('success', `Xóa thành công 1 sản phẩm`);
     res.redirect("back")
 }
 // [GET] /admin/products/trash/return/:id
 module.exports.returnItem = async (req, res) => {
     const id = req.params.id;
     await Product.updateOne({ _id: id }, { deleted: false })
-    req.flash('info', `Chuyển sản phẩm thành công`);
+    req.flash('success', `Chuyển sản phẩm thành công`);
     res.redirect("back")
 }
 // [GET] /admin/products/create
@@ -147,6 +147,7 @@ module.exports.create = async (req, res) => {
 }
 // [POST] /admin/products/create
 module.exports.createPost = async (req, res) => {
+
     req.body.price = parseInt(req.body.price);
     req.body.discountPercentage = parseInt(req.body.discountPercentage);
     req.body.stock = parseInt(req.body.stock);
@@ -156,7 +157,9 @@ module.exports.createPost = async (req, res) => {
     } else {
         req.body.position = parseInt(req.body.position);
     }
-    req.body.thumbnail = `/uploads/${req.file.filename}`
+    if (req.file) {
+        req.body.thumbnail = `/uploads/${req.file.filename}`
+    }
     console.log(req.file)
     const product = new Product(req.body);
     await product.save()
