@@ -136,3 +136,17 @@ td {
 .add-item {
     margin-bottom: 18px;
 }
+
+/* Image input */
+.image-preview {
+    width: 150px;
+    height: auto;
+    margin-top: 15px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.image-preview[src=""] {
+    display: none;
+}

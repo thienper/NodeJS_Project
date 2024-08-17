@@ -86,7 +86,7 @@ if (buttonsReturnItem.length > 0) {
                 const id = button.getAttribute("data-id");
                 //console.log(id)
                 const action = `${path}/${id}`
-                console.log(action)
+                //console.log(action)
                 formDeleteItem.action = action
                 formDeleteItem.submit();
             }
