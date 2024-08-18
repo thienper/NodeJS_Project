@@ -176,7 +176,7 @@ module.exports.edit = async (req, res) => {
         //product = product[0]
         console.log(product.title)
         res.render("admin/pages/products/edit.pug", {
-            pageTitle: "Chỉnh sửa sản phẩm sản phẩm",
+            pageTitle: "Chỉnh sửa sản phẩm",
             products: product
         });
     } catch (error) {
@@ -201,5 +201,23 @@ module.exports.editPatch = async (req, res) => {
         req.flash('error', `Cập nhật thất bại`);
     }
     res.redirect("back");
+
+}
+// [GET] /admin/products/detail
+module.exports.detail = async (req, res) => {
+    try {
+        const find = {
+            deleted: false,
+            _id: req.params.id
+        }
+        const product = await Product.find(find);
+        console.log(product)
+        res.render("admin/pages/products/detial.pug", {
+            pageTitle: product.title,
+            products: product
+        });
+    } catch (error) {
+        res.redirect(`${systemConfig.prefixAdmin}/products`);
+    }
 
 }
