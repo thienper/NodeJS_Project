@@ -15,5 +15,23 @@ module.exports.index = async (req, res) => {
         products: products
     });
 }
+// [GET] /products/:slug
+module.exports.detail = async (req, res) => {
+    try {
+        const find = {
+            deleted: false,
+            slug: req.params.slug,
+            status: "active"
+        }
+        const product = await Product.find(find);
+        res.render("client/pages/products/detial.pug", {
+            pageTitle: product.title,
+            products: product
+        });
+    } catch (error) {
+        res.redirect(`client/pages/products`);
+    }
+}
+
 
 
