@@ -3,10 +3,10 @@ const router = express.Router();
 const multer = require('multer')
 const controller = require("../../controllers/admin/product.controller")
 const validate = require("../../validates/admin/productsvalidate")
-const storageMulter = require("../../helpers/storageMulter");
-//const { validate } = require('../../models/product.model');
-const upload = multer({ storage: storageMulter() })
 
+const upload = multer()
+
+const uploadCloud = require("../../middlewares/admin/uploadCloud.middlewares")
 
 router.get('/', controller.index);
 
@@ -21,6 +21,7 @@ router.get('/create', controller.create)
 router.post(
     "/create",
     upload.single("thumbnail"),
+    uploadCloud.upload,
     validate.createPost,
     controller.createPost
 )

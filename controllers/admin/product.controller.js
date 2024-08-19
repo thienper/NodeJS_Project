@@ -157,12 +157,10 @@ module.exports.createPost = async (req, res) => {
     } else {
         req.body.position = parseInt(req.body.position);
     }
-    if (req.file) {
-        req.body.thumbnail = `/uploads/${req.file.filename}`
-    }
     console.log(req.file)
     const product = new Product(req.body);
     await product.save()
+
     res.redirect(`${systemConfig.prefixAdmin}/products`);
 }
 // [GET] /admin/products/edit
@@ -211,7 +209,7 @@ module.exports.detail = async (req, res) => {
             _id: req.params.id
         }
         const product = await Product.find(find);
-        console.log(product)
+        //console.log(product)
         res.render("admin/pages/products/detial.pug", {
             pageTitle: product.title,
             products: product
