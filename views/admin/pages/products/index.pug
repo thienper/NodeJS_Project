@@ -4,6 +4,7 @@ include ../../mixins/search.pug
 include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
 include ../../mixins/alert.pug
+include ../../mixins/sort.pug
 
 block main
   +alert-success("5000")
@@ -17,6 +18,11 @@ block main
             +filter-status(filterStatus)
           .col-6
             +search(keyword)
+      .card-body  
+        div(sort)
+          .row 
+            .col-4
+              +sort()
       .card-body
         .row 
           .col-8 
@@ -231,3 +237,4 @@ block main
   )
 
   script(src="/admin/js/product.js")
+
