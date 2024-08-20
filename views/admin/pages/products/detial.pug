@@ -25,7 +25,8 @@ block main
     if (products[0].position) 
         div(class="mb-4") Vị trí: <b>#{products[0].position}</b>
     if (products[0].description)
-        div(class="mb-4") #{products[0].description}
+        //- Sử dụng ! thay # để có thể hiện thị nội dung kh kèm mã html 
+        div(class="mb-4") !{products[0].description}
     a(
         href=`${prefixAdmin}/products/edit/${products[0].id}`
         class="btn btn-warning btn-sm"
