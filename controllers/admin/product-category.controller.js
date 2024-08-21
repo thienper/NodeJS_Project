@@ -1,23 +1,35 @@
 const ProductCategory = require("../../models/product-category.model")
 const systemConfig = require("../../config/system.js")
-
+const createTreeHelper = require("../../helpers/createTree.js")
 
 
 // [GET] /admin/products-category
 module.exports.index = async (req, res) => {
     let find = {
         deleted: false
-    }
-    const records = await ProductCategory.find(find)
+    };
+
+    const record = await ProductCategory.find(find);
+    const newRecord = createTreeHelper.tree(record);
+
     res.render("admin/pages/products-category/index.pug", {
         pageTitle: "Trang Danh Sách Sản Phẩm",
-        records: records
+        record: newRecord
     });
 }
 // [GET] /admin/products-category/create
 module.exports.create = async (req, res) => {
+    let find = {
+        deleted: false,
+    }
+
+    const record = await ProductCategory.find(find);
+
+    const newRecord = createTreeHelper.tree(record);
+    console.log(newRecord)
     res.render("admin/pages/products-category/create.pug", {
         pageTitle: "Trang Danh Sách Sản Phẩm",
+        record: newRecord
     });
 }
 // [POST] /admin/products-category/create

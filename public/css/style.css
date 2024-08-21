@@ -93,3 +93,7 @@
 .detial {
     margin-left: 20px;
 }
+
+.inner-image img {
+    height: 300px;
+}
