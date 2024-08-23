@@ -156,3 +156,7 @@ td {
 .image-preview[src=""] {
     display: none;
 }
+
+table tbody tr td a {
+    margin-left: 5px;
+}
