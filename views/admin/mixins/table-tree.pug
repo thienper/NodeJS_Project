@@ -1,7 +1,7 @@
 mixin table-tree(record, level = 1)
     each item, index in record
         - const prefix = Array(level + 1).join("-- ")
-        tr
+        tr 
             td  
                 input(
                     type="checkbox",

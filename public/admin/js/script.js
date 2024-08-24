@@ -1,4 +1,4 @@
-console.log("OK")
+//console.log("OK")
 //Button status
 const buttonStatus = document.querySelectorAll("[button-status]");
 if (buttonStatus.length > 0) {
@@ -154,7 +154,6 @@ if (uploadImage) {
 }
 //Sort
 const sort = document.querySelector("[sort]");
-console.log(sort);
 if (sort) {
     let url = new URL(window.location.href);
 

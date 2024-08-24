@@ -1,0 +1,36 @@
+extends ../../layouts/defaut
+include ../../mixins/alert
+
+block main
+  h1(class="mb-4") Chỉnh Sửa Quyền
+  +alert-success(3000)
+  +alert-error(3000)
+  form(  
+    action=`${prefixAdmin}/roles/edit/${record.id}?_method=PATCH`
+    method="POST"
+  )
+    div(class="form-group")
+      label(for="title", style="font-size: 20px") Tiêu đề
+      input(
+        type="text"
+        class="form-control"
+        id="title"
+        name="title"
+        required
+        value = record.title
+      )
+    div(class="form-group")
+      label(for="title",  style="font-size: 20px") Mô tả
+      input(
+        type="text"
+        class="form-control"
+        id="desc"
+        name="description"
+        required
+        value = record.description
+      )
+    div(class="form-group")
+      button(
+        type="submit"
+        class="btn btn-primary"
+      ) Cập nhật
