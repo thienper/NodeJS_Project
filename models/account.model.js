@@ -7,19 +7,21 @@ const accountSchema = new mongoose.Schema({
     password: String,
     token: {
         type: String,
-        default: generate.generateRandomString(20),
-        phone: String,
-        avatar: String,
-        role_id: String,
-        status: String,
-        deleted: {
-            type: Boolean,
-            default: false
-        },
-        deletedAt: Date,
+        default: generate.generateRandomString(20)
     },
+    phone: String,
+    avatar: String,
+    role_id: String,
+    status: String,
+    deleted: {
+        type: Boolean,
+        default: false
+    },
+    deletedAt: Date,
+
+},
     {
-        timestamps: true
+        timestamps: true,
     }
 );
 const Account = mongoose.model("Acounts", accountSchema, "accounts");
