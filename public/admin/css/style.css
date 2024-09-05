@@ -160,3 +160,23 @@ td {
 table tbody tr td a {
     margin-left: 5px;
 }
+
+/* Login */
+.login {
+    background-image: url(../../uploads/1723980989030+20-4.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+.cover-login .row {
+    width: 100%;
+}
+
+.cover-login {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
