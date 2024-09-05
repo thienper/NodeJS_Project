@@ -22,7 +22,12 @@ const port = process.env.PORT;
 
 // flash
 app.use(cookieParser('THIENPER'));
-app.use(session({ cookie: { maxAge: 60000 } }));
+app.use(session({
+    cookie: { maxAge: 60000 },
+    resave: false,
+    saveUninitialized: false,
+    secret: 'THIENPER'
+}));
 app.use(flash());
 
 //TinyMCE

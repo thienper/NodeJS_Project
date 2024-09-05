@@ -54,9 +54,9 @@ block main
         accept="image/*"
       )
       img(
-        src=""
-        class="image-preview"
-        alt="Preview"
+          src=""
+          upload-image-preview
+          class="image-preview"
       )
     div(class="form-group")
       label(for="role_id") Phân quyền
@@ -85,3 +85,4 @@ block main
       label(for="statusInActive" class="form-check-label") Dừng Hoạt động
     div(class="form-group")
       button(type="submit" class="btn btn-primary") Tạo mới
+  script(src="/admin/js/product.js")
