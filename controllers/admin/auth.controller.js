@@ -4,10 +4,17 @@ const systemConfig = require("../../config/system.js")
 
 
 // [GET] /admin/auth/login
-module.exports.login = (req, res) => {
-    res.render("admin/pages/auth/login.pug", {
-        pageTitle: "Trang Đăng Nhập"
-    });
+module.exports.login = async (req, res) => {
+    const user = await Acount.findOne({ token: req.cookies.token })
+    console.log(req.cookies.token);
+    if (user) {
+        res.redirect(`${systemConfig.prefixAdmin}/dashboard`)
+    } else {
+        res.render("admin/pages/auth/login.pug", {
+            pageTitle: "Trang Đăng Nhập"
+        });
+    }
+
 }
 // [POST] /admin/auth/login
 module.exports.loginPost = async (req, res) => {
