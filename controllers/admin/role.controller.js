@@ -3,7 +3,7 @@ const systemConfig = require("../../config/system.js")
 const createTreeHelper = require("../../helpers/createTree.js")
 
 
-// [GET] /admin/roles
+// [GET] /admin/roles 
 module.exports.index = async (req, res) => {
     let find = {
         deleted: false

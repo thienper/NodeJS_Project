@@ -6,17 +6,19 @@ html
     link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css")
     link(rel='stylesheet', href='https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css', integrity='sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N', crossorigin='anonymous')
   body
-    include ../partials/header
-    .body
-      .row.dflex
-        .col-3
-          include ../partials/sider
-        .col-9
-          .main
-            block main
+    if(role[0].permisstions.length > 0)
+      include ../partials/header
+      .body
+        .row.dflex
+          .col-3
+            include ../partials/sider
+          .col-9
+            .main
+              block main
 
-    include ../partials/footer
-
+      include ../partials/footer
+    else 
+      h1 Bạn không có quyền truy cập
 script(src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js") 
 script(src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js") 
 //-TinyMCE

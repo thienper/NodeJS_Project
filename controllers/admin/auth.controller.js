@@ -3,7 +3,7 @@ var md5 = require('md5');
 const systemConfig = require("../../config/system.js")
 
 
-// [GET] /admin/auth/login
+// [GET] /admin/auth/login 
 module.exports.login = async (req, res) => {
     const user = await Acount.findOne({ token: req.cookies.token })
     console.log(req.cookies.token);
