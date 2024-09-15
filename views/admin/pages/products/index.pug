@@ -20,7 +20,7 @@ block main
             .col-6
               +search(keyword)
         .card-body  
-          div(sort)
+          div(sort) 
             .row 
               .col-4
                 +sort()
@@ -49,6 +49,7 @@ block main
           th Vị Trí
           th Trạng Thái
           th Người Tạo
+          th Người Cập Nhật
           th Hành Động
         tbody
           each item, index in products
@@ -96,6 +97,11 @@ block main
               td 
                 p #{item.accountFullname}
                 +formatDateTime(item.createdBy.createdAt)
+              td 
+                - const updatedBy = item.updatedBy.slice(-1)[0]
+                if(updatedBy)
+                  p #{updatedBy.accountFullname}
+                  +formatDateTime(updatedBy.updatedAt)
               td
                 a(
                   href=`${prefixAdmin}/products/detail/${item.id}`
@@ -109,7 +115,7 @@ block main
                 if(role[0].permisstions.includes("products_delete"))
                   button(
                     class="btn btn-danger btn-sm ml-1"
-                    button-delete
+                    button-delete 
                     data-id=item.id
                     ) Xóa
     +pagination(pagination)

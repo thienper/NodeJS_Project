@@ -79,14 +79,12 @@ if (checkboxMullti) {
 const formChangeMulti = document.querySelector("[form-change-multi]")
 if (formChangeMulti) {
     formChangeMulti.addEventListener("submit", (e) => {
-        // prevenDefault : ngăn load lại trang
         e.preventDefault();
-
         const checkboxMullti = document.querySelector("[checkbox-multi]");
         const inputsChecked = checkboxMullti.querySelectorAll(
             "input[name='id']:checked"
         )
-        //console.log(inputsChecked)
+        console.log(inputsChecked)
 
         const typeChange = e.target.elements.type.value
         if (typeChange == "delete-all") {
@@ -114,7 +112,6 @@ if (formChangeMulti) {
                     ids.push(id)
                 }
             });
-
             console.log(ids.join(", "))
             inputIds.value = ids.join(", ")
             formChangeMulti.submit();
