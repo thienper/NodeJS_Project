@@ -4,8 +4,18 @@
 
 }
 
+.menu {
+    display: flex;
+    justify-content: space-between;
+}
+
 .inner-logo {
     padding-left: 20px;
+    margin-left: 20px;
+}
+
+.inner-menu {
+    margin-right: 20px;
 }
 
 .header .inner-logo img {
@@ -14,7 +24,6 @@
 }
 
 .header .inner-menu ul {
-    display: flex;
     list-style: none;
     margin: 0;
     padding-top: 10px;
@@ -28,6 +37,12 @@
     text-decoration: none;
     color: #e7e7e7;
     font-weight: bold;
+}
+
+.header .inner-menu ul li a:hover {
+    color: #000000;
+    /* Màu đỏ nổi bật khi hover */
+    transition: color 0.3s ease;
 }
 
 .footer {
@@ -97,3 +112,47 @@
 .inner-image img {
     height: 300px;
 }
+
+/*sub-menu */
+.sub-menu {
+    position: relative;
+    z-index: 999;
+}
+
+.sub-menu ul {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #82878b;
+    min-width: 180px;
+    display: none;
+    border: 1px solid rgb(255, 255, 255);
+}
+
+.sub-menu ul li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd
+}
+
+.sub-menu:hover>ul {
+    display: block;
+}
+
+.sub-menu ul li {
+    position: relative;
+}
+
+.sub-menu ul li ul {
+    right: 100%;
+    top: 0;
+}
+
+.sub-menu ul li:hover>ul {
+    display: block;
+}
+
+
+/* End sub-menu */

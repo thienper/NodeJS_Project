@@ -1,4 +1,4 @@
-const Acount = require("../../models/account.model")
+const Account = require("../../models/account.model")
 const Role = require("../../models/roles.model")
 
 const systemConfig = require("../../config/system.js")
@@ -9,7 +9,7 @@ module.exports.index = async (req, res) => {
     let find = {
         deleted: false
     }
-    const records = await Acount.find(find).select("-password -token")
+    const records = await Account.find(find).select("-password -token")
     for (const record of records) {
         const role = await Role.findOne({
             _id: record.role_id,
@@ -34,7 +34,7 @@ module.exports.create = async (req, res) => {
 // [POST] /admin/create
 module.exports.createPost = async (req, res) => {
 
-    const emailExist = await Acount.findOne({
+    const emailExist = await Account.findOne({
         email: req.body.email,
         deleted: false
     });
@@ -45,7 +45,7 @@ module.exports.createPost = async (req, res) => {
     } else {
         req.body.password = md5(req.body.password)
     }
-    const account = new Acount(req.body);
+    const account = new Account(req.body);
     await account.save();
     req.flash('success', 'Tạo account thành công');
     res.redirect(`${systemConfig.prefixAdmin}/accounts`);
@@ -56,7 +56,7 @@ module.exports.edit = async (req, res) => {
         deleted: false
     }
     try {
-        const record = await Acount.findById(find)
+        const record = await Account.findById(find)
         const roles = await Role.find({ deleted: false })
         res.render("admin/pages/accounts/edit.pug", {
             pageTitle: "Chỉnh sửa tài khoản",
@@ -70,8 +70,8 @@ module.exports.edit = async (req, res) => {
 }
 module.exports.editPatch = async (req, res) => {
     const id = req.params.id
-    const OldPassword = await Acount.findById(req.params.id);
-    const emailExist = await Acount.findOne({
+    const OldPassword = await Account.findById(req.params.id);
+    const emailExist = await Account.findOne({
         _id: { $ne: id },
         email: req.body.email,
         deleted: false
@@ -86,7 +86,7 @@ module.exports.editPatch = async (req, res) => {
         req.body.password = OldPassword.password;
     }
     try {
-        await Acount.updateOne({ _id: req.params.id }, req.body)
+        await Account.updateOne({ _id: req.params.id }, req.body)
         req.flash('success', `Cập nhật thành công`);
     } catch (error) {
         req.flash('error', `Cập nhật thất bại`);
