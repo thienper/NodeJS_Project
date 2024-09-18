@@ -68,7 +68,7 @@ module.exports.index = async (req, res) => {
             });
 
             updatedBy.accountFullname = userUpdated.fullName
-            console.log(product)
+            //console.log(product)
         }
 
     }
@@ -211,7 +211,7 @@ module.exports.create = async (req, res) => {
         category: newCategory
     });
 }
-// [POST] /admin/products/create
+// [POST] /admin/products/create 
 module.exports.createPost = async (req, res) => {
 
     req.body.price = parseInt(req.body.price);
