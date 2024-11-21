@@ -213,24 +213,31 @@ module.exports.create = async (req, res) => {
 }
 // [POST] /admin/products/create 
 module.exports.createPost = async (req, res) => {
+    const permissions = res.locals.role[0].permisstions;
+    console.log(permissions)
+    if (permissions.includes("products-create")) {
+        req.body.price = parseInt(req.body.price);
+        req.body.discountPercentage = parseInt(req.body.discountPercentage);
+        req.body.stock = parseInt(req.body.stock);
+        if (req.body.position == "") {
+            const countProduct = await Product.countDocuments();
+            req.body.position = countProduct + 1;
+        } else {
+            req.body.position = parseInt(req.body.position);
+        }
+        //console.log(req.file)
+        req.body.createdBy = {
+            account_id: res.locals.user.id
+        }
+        const product = new Product(req.body);
+        await product.save()
 
-    req.body.price = parseInt(req.body.price);
-    req.body.discountPercentage = parseInt(req.body.discountPercentage);
-    req.body.stock = parseInt(req.body.stock);
-    if (req.body.position == "") {
-        const countProduct = await Product.countDocuments();
-        req.body.position = countProduct + 1;
+        res.redirect(`${systemConfig.prefixAdmin}/products`);
     } else {
-        req.body.position = parseInt(req.body.position);
+        res.redirect("back")
     }
-    //console.log(req.file)
-    req.body.createdBy = {
-        account_id: res.locals.user.id
-    }
-    const product = new Product(req.body);
-    await product.save()
 
-    res.redirect(`${systemConfig.prefixAdmin}/products`);
+
 }
 // [GET] /admin/products/edit
 module.exports.edit = async (req, res) => {
