@@ -215,7 +215,7 @@ module.exports.create = async (req, res) => {
 module.exports.createPost = async (req, res) => {
     const permissions = res.locals.role[0].permisstions;
     console.log(permissions)
-    if (permissions.includes("products-create")) {
+    if (permissions.includes("products_create")) {
         req.body.price = parseInt(req.body.price);
         req.body.discountPercentage = parseInt(req.body.discountPercentage);
         req.body.stock = parseInt(req.body.stock);
