@@ -5,6 +5,24 @@ header.header
       div.inner-logo
           a(href="/")
             img(src="/img/logo.jpg",alt="logo")
+      .form-search-header
+        form(
+          action="/search"
+          method="GET"
+        )
+          div(class="form-group d-flex mb-0")
+            input(
+              type="text"
+              placeholder="Nhập từ khóa..."
+              class="form-control"
+              name="keyword"
+              value = keyword
+            )
+            button(
+              type="submit"
+              class="btn btn-primary"
+            ) Tìm
+
       div.inner-menu
           ul
             li

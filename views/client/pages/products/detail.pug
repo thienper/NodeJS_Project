@@ -1,0 +1,46 @@
+extends ../../layouts/default
+include ../../mixins/box-head.pug
+
+block main 
+  .product-detail
+    .container.my-5
+      .row  
+        .col-6.infor-img  
+          .inner-thumb 
+            img(src=products.thumbnail, alt=products.title)
+        .col-6.infor
+          h1(class="inner-title") #{products.title}
+          if (products.category) 
+            div(class="inner-category")
+              span Danh mục: 
+              a(href=`/products/${products.category.slug}`)  #{products.category.title}
+          if (products.priceNew) 
+            div(class="inner-price-new")  <b>#{products.priceNew}$</b> 
+          if (products.price) 
+              div(class="inner-price-old")  <b>#{products.price}$</b>
+          if (products.discountPercentage) 
+              div(class="inner-percent") Giảm giá: <b>#{products.discountPercentage} %</b>
+          if (products.stock)
+              div(class="inner-stock") Còn lại: <b>#{products.stock} Sản phẩm</b>
+          form(
+            action=`/cart/add/${products.id}`
+            method="POST"
+          )
+            input(
+              class="form-control mb-2"
+              type="number"
+              name="quantity"
+              value="1"
+              min="1"
+              max=products.stock
+            )
+            button(
+              type="submit"
+              class="btn btn-success btn-block"
+            ) Thêm vào giỏ hàng
+      hr
+      .container.my-5
+        .row
+          .col-12
+            +box-head("Mô tả sản phẩm")
+            .inner-desc !{products.description}

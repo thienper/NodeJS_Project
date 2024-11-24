@@ -16,23 +16,35 @@ module.exports.index = async (req, res) => {
         products: newProducts
     });
 }
-// [GET] /products/:slug
+// [GET] /products/:slugProduct
 module.exports.detail = async (req, res) => {
     try {
         const find = {
             deleted: false,
             slug: req.params.slug,
             status: "active"
+        };
+        const product = await Product.findOne(find);
+        if (product.product_category_id) {
+            const category = await ProductCategory.findOne({
+                _id: product.product_category_id,
+                deleted: false,
+                status: "active"
+            });
+            product.category = category;
         }
-        const product = await Product.find(find);
-        res.render("client/pages/products/detial.pug", {
+        product.priceNew = productsHelper.priceNewproduct(product)
+
+        res.render("client/pages/products/detail.pug", {
             pageTitle: product.title,
             products: product
         });
     } catch (error) {
-        res.redirect(`client/pages/products`);
+        console.error(error);
+        res.redirect(`/products`);
     }
-}
+};
+
 // [GET] /products/:slugCategory
 module.exports.category = async (req, res) => {
     const category = await ProductCategory.findOne({
@@ -46,10 +58,10 @@ module.exports.category = async (req, res) => {
 
     const products = await Product.find({
         product_category_id: { $in: [category.id, ...listSubCategoryId] },
-        deleted: false
+        deleted: false,
+        status: "active"
     }).sort({ position: "desc" });
 
-    console.log(products)
     // Lay gia moi
     const newProducts = productsHelper.priceNewproducts(products)
     res.render("client/pages/products/index.pug", {
@@ -57,5 +69,4 @@ module.exports.category = async (req, res) => {
         products: newProducts
     });
 }
-
 
