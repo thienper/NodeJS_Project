@@ -9,11 +9,9 @@ module.exports.addPost = async (req, res) => {
     const cart = await Cart.findOne({
         _id: cartId
     })
-    console.log(cart.products)
     const existProduct = cart.products.find(item => item.product_id == productId)
     if (existProduct) {
         const quantityNew = quantity + existProduct.quantity;
-        console.log(quantityNew)
         await Cart.updateOne({
             _id: cartId,
             'products.product_id': productId

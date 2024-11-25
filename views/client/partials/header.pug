@@ -23,7 +23,7 @@ header.header
               class="btn btn-primary"
             ) Tìm
 
-      div.inner-menu
+      div(style="display: flex").inner-menu
           ul
             li
               a(href="/") Trang Chủ
@@ -31,4 +31,6 @@ header.header
               -const pathProduct = "/products" 
               a(href=pathProduct) Sản Phẩm
                 +sub-menu(layoutProductsCategory, pathProduct)
-              
+          ul
+            li
+              a(href="/cart") Giỏ hàng(#{miniCart ? miniCart.totalQuantity : 0})
