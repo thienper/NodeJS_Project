@@ -1,5 +1,39 @@
 const Cart = require("../../models/cart.model")
+const Product = require("../../models/product.model")
+const productHelper = require("../../helpers/products")
 
+// [GET] /cart
+module.exports.index = async (req, res) => {
+    const cartId = req.cookies.cartId;
+    const cart = await Cart.findOne({
+        _id: cartId
+    })
+
+    if (cart.products.length > 0) {
+        for (const item of cart.products) {
+            const product_id = item.product_id;
+            const productInfo = await Product.findOne({
+                _id: product_id,
+            }).select("title thumbnail slug price discountPercentage")
+
+            //Giá mới cho từng sản phẩm
+            productInfo.priceNew = productHelper.priceNewproduct(productInfo)
+            //Tổng tiền từng sản phẩm
+            item.totalPrice = productInfo.priceNew * item.quantity
+            //Gán ds sản phẩm cho biến productInfo
+            item.productInfo = productInfo
+
+        }
+    }
+    //Tổng tiền tất cả sản phẩm
+    cart.totalPrice = cart.products.reduce((sum, item) => sum + item.totalPrice, 0)
+    console.log(cart)
+    res.render("client/pages/cart/index.pug", {
+        pageTitle: "Giỏ hàng",
+        cartDetail: cart
+    });
+
+}
 // [POST] /cart/add/:productId
 module.exports.addPost = async (req, res) => {
     const productId = req.params.productId; // req.params là lấy giá trị từ trên path
