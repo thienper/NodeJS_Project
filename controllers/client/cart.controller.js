@@ -27,7 +27,6 @@ module.exports.index = async (req, res) => {
     }
     //Tổng tiền tất cả sản phẩm
     cart.totalPrice = cart.products.reduce((sum, item) => sum + item.totalPrice, 0)
-    console.log(cart)
     res.render("client/pages/cart/index.pug", {
         pageTitle: "Giỏ hàng",
         cartDetail: cart
@@ -73,4 +72,23 @@ module.exports.addPost = async (req, res) => {
         res.redirect("back");
     }
 
+}
+// [GET] /cart/delete/:productId
+module.exports.deleteItem = async (req, res) => {
+    const cartId = req.cookies.cartId;
+    const productId = req.params.productId
+    const cart = await Cart.findOne({
+        _id: cartId
+    })
+    const existProduct = cart.products.find(item => item.product_id == productId)
+    if (existProduct) {
+        await Cart.updateOne({
+            _id: cartId
+        }, {
+            $pull: { products: { product_id: productId } }
+        })
+    }
+
+    req.flash("success", "Đã xóa sản phẩm thành công!")
+    res.redirect("back");
 }
