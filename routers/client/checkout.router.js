@@ -6,6 +6,6 @@ router.get('/', controller.index);
 
 router.post('/order', controller.order)
 
-router.post('/success/:orderId', controller.success)
+router.get('/success/:orderId', controller.success)
 
 module.exports = router; 

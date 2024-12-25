@@ -68,7 +68,6 @@ module.exports.order = async (req, res) => {
     }
 
     const order = new Order(orderInfo);
-    console.log(order)
     await order.save();
     //Cap nhat lai gio hang
     await Cart.updateOne({
@@ -80,9 +79,26 @@ module.exports.order = async (req, res) => {
 
     res.redirect(`/checkout/success/${order.id}`);
 }
-// [POST] /success/:orderId
+// [GET] /success/:orderId
 module.exports.success = async (req, res) => {
+    const orderId = req.params.orderId;
+    const order = await Order.findOne({ _id: orderId })
+    console.log(order)
+
+    for (const product of order.products) {
+        const productInfo = await Product.findOne({
+            _id: product.product_id
+        }).select("title thumbnail")
+
+        product.productInfo = productInfo
+        product.priceNew = productHelper.priceNewproduct(product)
+        product.totalPrice = product.priceNew * product.quantity
+
+    }
+    order.totalPrice = order.products.reduce((sum, item) => sum + item.totalPrice, 0)
+    console.log(order)
     res.render("client/pages/checkout/success.pug", {
-        pageTitle: "Đặt hàng thành công"
+        pageTitle: "Đặt hàng thành công",
+        order: order
     })
 }
