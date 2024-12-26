@@ -3,7 +3,7 @@ header.header
   .contaiter
     .align-item-center.menu
       div.inner-logo
-          a(href="/")
+          a(href="/") 
             img(src="/img/logo.jpg",alt="logo")
       .form-search-header
         form(
@@ -34,8 +34,13 @@ header.header
           ul
             li
               a(href="/cart") Giỏ hàng(#{miniCart ? miniCart.totalQuantity : 0})
-          ul
-            li 
-              a(href="/user/register") Đăng kí
-            li 
-              a(href="/user/login") Đăng nhập
+          if(user)
+             ul
+              li 
+                a(href="/user/login") Đăng xuất
+          else
+            ul
+              li 
+                a(href="/user/register") Đăng kí
+              li 
+                a(href="/user/login") Đăng nhập 
