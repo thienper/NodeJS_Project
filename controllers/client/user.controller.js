@@ -1,6 +1,7 @@
 const User = require("../../models/user.model")
+const ForgotPassword = require("../../models/forgotPassword.model")
 var md5 = require('md5');
-
+const generateHelper = require("../../helpers/generate")
 
 // [GET] /user/register
 module.exports.register = async (req, res) => {
@@ -76,4 +77,49 @@ module.exports.logout = async (req, res) => {
     res.render("client/pages/home/index.pug", {
         pageTitle: "Trang chủ"
     });
+}
+// [GET] /user/password/forgotPassword
+module.exports.forgotPassword = async (req, res) => {
+    res.render("client/pages/user/forgot-password.pug", {
+        pageTitle: "Quên mật khẩu"
+    });
+}
+// [POST] /user/password/forgotPassword
+module.exports.forgotPasswordPost = async (req, res) => {
+    const email = req.body.email
+
+    const user = await User({
+        email: email,
+        deleted: false
+    })
+    //Neu khong ton tai email
+    if (!user) {
+        res.flash("error", "Email không tồn tại")
+        res.redirect("back")
+        return;
+    }
+    //Luu thong tin vao dataBase
+    const objectForgotPassword = {
+        email: email,
+        otp: generateHelper.generateRandomNumber(5),
+        expireAt: 180
+    }
+    console.log(objectForgotPassword)
+    const existObjectForgotPassword = await ForgotPassword.findOne({
+        email: email
+    })
+    const forgotPassword = new ForgotPassword(objectForgotPassword)
+    // if (existObjectForgotPassword) {
+    //     await ForgotPassword.updateOne(forgotPassword)
+    // }
+    await forgotPassword.save()
+    // Neu ton tai email, Gui ma OTP qua email
+
+
+
+
+    // res.render("client/pages/user/forgot-password.pug", {
+    //     pageTitle: "Quên mật khẩu"
+    // });
+    res.send("OK")
 }

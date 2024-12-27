@@ -14,6 +14,9 @@ router.post('/login', validate.loginPost, controller.loginPost)
 
 router.get('/logout', controller.logout)
 
+router.get('/password/forgot', controller.forgotPassword)
+
+router.post('/password/forgot', validate.checkEmail, controller.forgotPasswordPost)
 
 
 module.exports = router;
